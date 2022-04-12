@@ -42,7 +42,7 @@ Once you're happy with your creation, either upload it to Github or send it acro
 
 ## Troubleshooting
 
-We've been deliberately vague with these instructions because we want to see if you can solve problems on your own. However, if you run into an issue you can't get past, don't just give up! Email us at developer-support@homeflow.co.uk and we'll do our best to point you in the right direction.
+We've been deliberately vague with these instructions because we want to see if you can solve problems on your own. However, if you run into an issue you can't get past, don't just give up! Get in touch and we'll do our best to point you in the right direction.
 
 ## Getting Started
 
