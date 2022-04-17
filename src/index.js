@@ -16,18 +16,19 @@ import "./styles.scss";
 function _renderProperty(property) {
   return `
                   <div class="row" data-id"${property.property_id}">
-                  <div class="col">
-                      Property Image
-                    </div>
+                  <img class="col property-image" alt="${property.display_address}" src="http://mr0.homeflow.co.uk/${property.photos[0]}">
+                  
+                    </img>
                     <div class="col">
+                      <div class="row">
                       ${property.bedrooms}
-                    </div>
-                    <div class="col">
+                      </div>
+                      <div class="row">
                       ${property.bathrooms}
-                    </div>
-                    <div class="col">
+                      </div>
+                      <div class="row">
                       £${property.price_value}
-                    </div>
+                      </div>
                   </div>
                 `;
 }
@@ -44,20 +45,14 @@ fetch("/api/properties?location=brighton")
         PROPERTY IMAGE
       </div>
       <div class="col">
-        BEDROOMS
+        Details
       </div>
-      <div class="col">
-        BATHROOMS
-      </div>
-      <div class="col">
-        PRICE
-      </div>
-    </div>
-  </div>`;
+    </div>`;
     results.forEach((element) => {
       text = text.concat(_renderProperty(element));
     });
 
-    document.querySelector("#arrayTest").innerHTML = text.concat("</div>");
+    document.querySelector("#propertyResults").innerHTML =
+      text.concat("</div>");
     console.log(json.result.properties.elements);
   });
