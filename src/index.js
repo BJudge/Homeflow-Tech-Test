@@ -1,17 +1,17 @@
 import "./styles.scss";
 
-// fetch("/api/properties?location=brighton")
-//   .then((response) => response.json())
-//   .then((json) => {
-//     console.log(json.result.properties.elements);
-//     document.querySelector("#app").innerHTML =
-//       "<p>Check the JS console for some data...</p>";
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//     document.querySelector("#app").innerHTML =
-//       "<p>Something went wrong. Check the console for details.</p>";
-//   });
+fetch("/api/properties?location=brighton")
+  .then((response) => response.json())
+  .then((json) => {
+    console.log(json.result.properties.elements);
+    document.querySelector("#app").innerHTML =
+      "<p>Check the JS console for some data...</p>";
+  })
+  .catch((err) => {
+    console.error(err);
+    document.querySelector("#app").innerHTML =
+      "<p>Something went wrong. Check the console for details.</p>";
+  });
 
 const PropertyList = document.getElementById("propertyList");
 
@@ -23,7 +23,7 @@ function _renderProperty(property) {
                      </div>
                     <div class="col">
                       <div class="row">
-                        Bedrooms ${property.bedrooms}
+                        Bedrooms ${property.bedrooms} 
                       </div>
                       <div class="row">
                         Bathrooms ${property.bathrooms}

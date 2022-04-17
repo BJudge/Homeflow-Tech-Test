@@ -23,11 +23,23 @@
   <body>
     <main>
       <h1>Homeflow Front-end Tech Test</h1>
+      <div class="grid-container">
+        <!-- <div id="app"></div> -->
+        <section class="search">
+          <input
+            class="seach-box"
+            type="search"
+            id="site-search"
+            placeholder="Find your property"
+            name="q"
+          />
 
-      <div id="app"></div>
-      <div id="propertyList"></div>
+          <button>Search</button>
+        </section>
+        <section id="propertyList" class="property-results"></section>
+        <section class="map">Hello Map!</section>
+      </div>
     </main>
-
     <script src="/main.js"></script>
   </body>
 </html>

@@ -11,8 +11,18 @@ main {
     font-size: 40px;
     text-align: center;
   }
-  .property-image {
-    max-width: 300px;
-    max-height: 400px;
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+  .search {
+    grid-column: 1/-1;
+  }
+  .property-results {
+    grid-column: span 4;
+  }
+  .map {
+    height: 100%;
+    grid-column: span 2;
   }
 }
