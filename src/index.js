@@ -13,27 +13,28 @@ import "./styles.scss";
 //       "<p>Something went wrong. Check the console for details.</p>";
 //   });
 
+const PropertyList = document.getElementById("propertyList");
+
 function _renderProperty(property) {
   return `
                   <div class="row" data-id"${property.property_id}">
-                  <img class="col property-image" alt="${property.display_address}" src="http://mr0.homeflow.co.uk/${property.photos[0]}">
-                  
-                    </img>
+                     <div class="col">
+                       <img class="property-image" alt="${property.display_address}" src="http://mr0.homeflow.co.uk/${property.photos[0]}"/>
+                     </div>
                     <div class="col">
                       <div class="row">
-                      ${property.bedrooms}
+                        Bedrooms ${property.bedrooms}
                       </div>
                       <div class="row">
-                      ${property.bathrooms}
+                        Bathrooms ${property.bathrooms}
                       </div>
                       <div class="row">
-                      £${property.price_value}
+                        Asking Price £${property.price_value}
                       </div>
+                    </div>
                   </div>
                 `;
 }
-
-// I want two columns with multiple rows in the second column for the data and one row in the first column for the image
 
 fetch("/api/properties?location=brighton")
   .then((response) => response.json())
@@ -52,7 +53,6 @@ fetch("/api/properties?location=brighton")
       text = text.concat(_renderProperty(element));
     });
 
-    document.querySelector("#propertyResults").innerHTML =
-      text.concat("</div>");
+    PropertyList.innerHTML = text.concat("</div>");
     console.log(json.result.properties.elements);
   });
