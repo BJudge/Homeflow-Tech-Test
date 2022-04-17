@@ -15,7 +15,7 @@ import "./styles.scss";
 
 function _renderProperty(property) {
   return `
-                  <div class="row">
+                  <div class="row" data-id"${property.property_id}">
                   <div class="col">
                       Property Image
                     </div>
@@ -31,6 +31,8 @@ function _renderProperty(property) {
                   </div>
                 `;
 }
+
+// I want two columns with multiple rows in the second column for the data and one row in the first column for the image
 
 fetch("/api/properties?location=brighton")
   .then((response) => response.json())
