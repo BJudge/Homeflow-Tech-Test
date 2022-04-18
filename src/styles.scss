@@ -31,8 +31,16 @@ main {
   .property-results {
     grid-column: span 4;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    // justify-content: space-around;
     border: 1px solid black;
+  }
+  .property-item {
+    width: 100%;
+    display: flex;
+    margin: 5px;
+    justify-content: space-around;
   }
   .map {
     height: 100%;

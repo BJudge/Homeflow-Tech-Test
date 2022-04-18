@@ -16,43 +16,36 @@ fetch("/api/properties?location=brighton")
 const PropertyList = document.getElementById("propertyList");
 
 function _renderProperty(property) {
-  return `
-                  <div class="row" data-id"${property.property_id}">
-                     <div class="col">
+  const html = `
+                  <div class="property-item" data-id"${property.property_id}">
+                     <div class="property-image">
                        <img class="property-image" alt="${property.display_address}" src="http://mr0.homeflow.co.uk/${property.photos[0]}"/>
                      </div>
-                    <div class="col">
-                      <div class="row">
+                    <div class="property-details">
+                      <div class="property-bedrooms">
                         Bedrooms ${property.bedrooms} 
                       </div>
-                      <div class="row">
+                      <div class="property-bathrooms">
                         Bathrooms ${property.bathrooms}
                       </div>
-                      <div class="row">
+                      <div class="prooperty-price">
                         Asking Price £${property.price_value}
                       </div>
                     </div>
                   </div>
                 `;
+  return html;
 }
 
 fetch("/api/properties?location=brighton")
   .then((response) => response.json())
   .then((json) => {
     const results = json.result.properties.elements;
-    let text = ` <div class="container">
-    <div class="row">
-    <div class="col">
-        PROPERTY IMAGE
-      </div>
-      <div class="col">
-        Details
-      </div>
-    </div>`;
+    let text = "";
     results.forEach((element) => {
       text = text.concat(_renderProperty(element));
     });
 
-    PropertyList.innerHTML = text.concat("</div>");
+    PropertyList.innerHTML = text;
     console.log(json.result.properties.elements);
   });
