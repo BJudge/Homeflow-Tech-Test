@@ -14,15 +14,29 @@ main {
   .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    column-gap: 5px;
+    row-gap: 5px;
   }
   .search {
     grid-column: 1/-1;
+    border: 1px solid black;
+  }
+  .seach-box {
+    width: 50%;
+  }
+  .button {
+    border-radius: 25%;
+    background-color: #ffffff;
   }
   .property-results {
     grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
   }
   .map {
     height: 100%;
     grid-column: span 2;
+    border: 1px solid black;
   }
 }
