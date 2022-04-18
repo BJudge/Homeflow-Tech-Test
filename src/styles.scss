@@ -1,6 +1,12 @@
 body {
-  font-family: "Roboto";
+  font-family: "Nunito", sans-serif;
+  --light-blue: #60e3ff;
+  --dark-blue: #2c5785;
+  --orange: #ff6900;
+  --main-grey: #d3d3d3;
 }
+
+// background for every other property #60e3ff;
 
 main {
   padding: 20px;
@@ -11,9 +17,14 @@ main {
     font-size: 40px;
     text-align: center;
   }
+
+  .border-bottom {
+    border-bottom: 2px solid #ff6900;
+  }
+
   .grid-container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(6, 1fr);
     column-gap: 5px;
     row-gap: 5px;
   }
@@ -23,17 +34,21 @@ main {
   }
   .seach-box {
     width: 50%;
+    height: 30px;
   }
   .button {
-    border-radius: 25%;
-    background-color: #ffffff;
+    border-radius: 40px;
+    border: 1px solid #60e3ff;
+    background-color: #2c5785;
+    padding: 10px 25px;
+    color: #ffffff;
+    font: 16px "Nunito", sans-serif;
   }
   .property-results {
     grid-column: span 4;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    // justify-content: space-around;
     border: 1px solid black;
   }
   .property-item {
@@ -42,9 +57,27 @@ main {
     margin: 5px;
     justify-content: space-around;
   }
-  .map {
-    height: 100%;
+
+  .property-item:nth-child(even) {
+    background-color: var(--main-grey);
+  }
+
+  .property-image {
+    width: 200px;
+    height: 150;
+  }
+  .additional-list {
     grid-column: span 2;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  .map {
+    height: 500px;
     border: 1px solid black;
+  }
+  .favourite-items {
+    border: 1px solid black;
+    height: 500px;
   }
 }
