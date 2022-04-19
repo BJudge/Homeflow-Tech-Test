@@ -1,25 +1,57 @@
 import "./styles.scss";
 const PropertyList = document.getElementById("propertyList");
-const favouriteProperties = [];
+const favouriteProperties = [12739280, 12594566, 12086860, 12696851];
+let AllProperties = [];
+let favouritesList = [];
 
-// fetch("/api/properties?location=brighton")
-//   .then((response) => response.json())
-//   .then((json) => {
-//     console.log(json.result.properties.elements);
-//     document.querySelector("#app").innerHTML =
-//       "<p>Check the JS console for some data...</p>";
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//     document.querySelector("#app").innerHTML =
-//       "<p>Something went wrong. Check the console for details.</p>";
-//   });
+fetch("/api/properties?location=brighton")
+  .then((response) => response.json())
+  .then((json) => {
+    const results = json.result.properties.elements;
+    console.log(results);
+    let text = "";
+    results.forEach((element) => {
+      text = text.concat(_renderProperty(element));
+    });
+    PropertyList.innerHTML = text;
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
+function AddToFavourites() {
+  PropertyList.addEventListener("click", (e) => {
+    if (favouriteProperties.includes(e.target.id)) {
+      return console.log("All ready in your list");
+    } else {
+      favouriteProperties.push(e.target.id);
+      console.log(favouriteProperties);
+    }
+  });
+}
+
+AddToFavourites();
+
+function _renderFavourites() {
+  fetch("/api/properties?location=brighton")
+    .then((response) => response.json())
+    .then((json) => {
+      const results = json.result.properties.elements;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
 
 function _renderProperty(property) {
   const html = `
                   <div class="property-item" data-id"${property.property_id}">
                      <div class="property-image">
-                       <img class="property-image" alt="${property.display_address}" src="http://mr0.homeflow.co.uk/${property.photos[0]}"/>
+                       <img class="property-image" alt="${
+                         property.display_address
+                       }" src="http://mr0.homeflow.co.uk/${
+    property.photos[0]
+  }"/>
                      </div>
                     <div class="property-details">
                       <div class="property-bedrooms">
@@ -28,24 +60,23 @@ function _renderProperty(property) {
                       <div class="property-bathrooms">
                         Bathrooms ${property.bathrooms}
                       </div>
-                      <div class="prooperty-price">
-                        Asking Price £${property.price_value}
+                      <div class="property-price">
+                        ${
+                          property.primary_channel === "sales"
+                            ? "Asking Price"
+                            : "Monthly Rental"
+                        } £${property.price_value.toLocaleString()}
                       </div>
+                      <div class="property-description">
+                      ${property.short_description.slice(0, 100)}...
+                      </div>
+                    </div>
+                    <div>
+                    <button id=${
+                      property.property_id
+                    } class="favourites-button button">Add to favourites</button>
                     </div>
                   </div>
                 `;
   return html;
 }
-
-fetch("/api/properties?location=brighton")
-  .then((response) => response.json())
-  .then((json) => {
-    const results = json.result.properties.elements;
-    let text = "";
-    results.forEach((element) => {
-      text = text.concat(_renderProperty(element));
-    });
-
-    PropertyList.innerHTML = text;
-    console.log(json.result.properties.elements);
-  });

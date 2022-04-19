@@ -44,10 +44,22 @@ main {
     color: #ffffff;
     font: 16px "Nunito", sans-serif;
   }
+  .favourites-button {
+    flex-grow: 1;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .button:hover,
+  .button:active {
+    background-color: #ffffff;
+    color: #2c5785;
+  }
   .property-results {
     grid-column: span 4;
     display: flex;
     flex-direction: row;
+    align-content: center;
     flex-wrap: wrap;
     border: 1px solid black;
   }
@@ -61,10 +73,14 @@ main {
   .property-item:nth-child(even) {
     background-color: var(--main-grey);
   }
+  .property-details {
+    flex-grow: 4;
+  }
 
   .property-image {
     width: 200px;
     height: 150;
+    flex-grow: 2;
   }
   .additional-list {
     grid-column: span 2;
