@@ -1,6 +1,7 @@
 import "./styles.scss";
 const PropertyList = document.getElementById("propertyList");
 const FavouriteList = document.getElementById("favouritesList");
+const RESULTS_PER_PAGE = 10;
 const favouriteProperties = [
   12739280, 12594566, 12086860, 12696851, 12769085, 12733905, 12087535,
   12421036, 12448277,
@@ -19,17 +20,26 @@ fetch("/api/properties?location=brighton")
     AllProperties.forEach((element) => {
       propertyListInfo = propertyListInfo.concat(_renderProperty(element));
     });
-    PropertyList.innerHTML = propertyListInfo;
+    getSearchResultsPage();
+    PropertyList.insertAdjacentHTML("afterbegin", propertyListInfo);
     console.log("original matchedFavourites", matchedFavourites);
     _matchedFavourites();
     matchedFavourites.forEach((element) => {
       favouriteListInfo = favouriteListInfo.concat(_renderFavourites(element));
     });
-    FavouriteList.innerHTML = favouriteListInfo;
+    FavouriteList.insertAdjacentHTML("afterbegin", favouriteListInfo);
   })
   .catch((err) => {
     console.error(err);
   });
+
+function getSearchResultsPage(page = 1) {
+  //this requires the Allproperties to be a string
+  const start = (page - 1) * RESULTS_PER_PAGE;
+  const end = page * RESULTS_PER_PAGE;
+
+  console.log(AllProperties.slice(start, end));
+}
 
 function AddToFavourites() {
   PropertyList.addEventListener("click", (e) => {
