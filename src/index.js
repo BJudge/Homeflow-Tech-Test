@@ -51,6 +51,7 @@ function _addToMatchedFavourites(propertyId) {
   console.log(matchedResult);
   console.log(propertyId);
   console.log("New Matched Properties", matchedFavourites);
+  _renderFavourites(matchedResult);
 }
 
 function _matchedFavourites() {
