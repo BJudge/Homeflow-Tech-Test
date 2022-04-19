@@ -1,6 +1,10 @@
 import "./styles.scss";
 const PropertyList = document.getElementById("propertyList");
-const favouriteProperties = [12739280, 12594566, 12086860, 12696851, 12769085];
+const FavouriteList = document.getElementById("favouritesList");
+const favouriteProperties = [
+  12739280, 12594566, 12086860, 12696851, 12769085, 12733905, 12087535,
+  12421036, 12448277,
+];
 let AllProperties = [];
 let matchedFavourites = [];
 
@@ -10,13 +14,18 @@ fetch("/api/properties?location=brighton")
   .then((json) => {
     AllProperties = json.result.properties.elements;
     // console.log(AllProperties);
-    let text = "";
+    let propertyListInfo = "";
+    let favouriteListInfo = "";
     AllProperties.forEach((element) => {
-      text = text.concat(_renderProperty(element));
+      propertyListInfo = propertyListInfo.concat(_renderProperty(element));
     });
-    PropertyList.innerHTML = text;
+    PropertyList.innerHTML = propertyListInfo;
+    console.log("original matchedFavourites", matchedFavourites);
     _matchedFavourites();
-    _renderFavourites();
+    matchedFavourites.forEach((element) => {
+      favouriteListInfo = favouriteListInfo.concat(_renderFavourites(element));
+    });
+    FavouriteList.innerHTML = favouriteListInfo;
   })
   .catch((err) => {
     console.error(err);
@@ -51,14 +60,29 @@ function _matchedFavourites() {
     AllProperties.forEach((property) => {
       if (property.property_id === savedProperty) {
         matchedFavourites.push(property);
+        // return _renderFavourites(property);
       }
     });
   });
 }
 
-function _renderFavourites() {
-  //render matched properties here
-  console.log("matched properties", matchedFavourites);
+function _renderFavourites(property) {
+  const html = ` 
+    <div class="favourite-container">
+      <div class="favouite-image-container">
+        <img src="http://mr0.homeflow.co.uk/${
+          property.photos[0]
+        }" alt="" class="favourite-image" />
+      </div>
+      <div class="favourite-description">${property.short_description.slice(
+        0,
+        100
+      )}...</div>
+      <div class="favourite-view-map" data-id="${property.property_id}">
+      <button class="favourite-map-button button">View on map</button>
+      </div>
+    </div>`;
+  return html;
 }
 
 function _renderProperty(property) {
@@ -89,12 +113,16 @@ function _renderProperty(property) {
                       ${property.short_description.slice(0, 100)}...
                       </div>
                     </div>
+                    <div class="property-buttons">
                     <div>
-                    <button id=${
-                      property.property_id
-                    } class="favourites-button button">Add to favourites</button>
-                    </div>
-                    <button class="viewMap-button button">View on map</button>
+                      <button id=${
+                        property.property_id
+                      } class="favourites-button button">Add to favourites</button>
+                      </div>
+                      <div>
+                      <button class="viewMap-button button">View on map</button>
+                      </div>
+                      </div>
                     </div>
                   </div>
                 `;
