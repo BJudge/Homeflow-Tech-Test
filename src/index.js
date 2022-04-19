@@ -1,19 +1,22 @@
 import "./styles.scss";
 const PropertyList = document.getElementById("propertyList");
-const favouriteProperties = [12739280, 12594566, 12086860, 12696851];
+const favouriteProperties = [12739280, 12594566, 12086860, 12696851, 12769085];
 let AllProperties = [];
-let favouritesList = [];
+let matchedFavourites = [];
 
+//this looks like a big init function
 fetch("/api/properties?location=brighton")
   .then((response) => response.json())
   .then((json) => {
-    const results = json.result.properties.elements;
-    console.log(results);
+    AllProperties = json.result.properties.elements;
+    // console.log(AllProperties);
     let text = "";
-    results.forEach((element) => {
+    AllProperties.forEach((element) => {
       text = text.concat(_renderProperty(element));
     });
     PropertyList.innerHTML = text;
+    _matchedFavourites();
+    _renderFavourites();
   })
   .catch((err) => {
     console.error(err);
@@ -21,26 +24,41 @@ fetch("/api/properties?location=brighton")
 
 function AddToFavourites() {
   PropertyList.addEventListener("click", (e) => {
-    if (favouriteProperties.includes(e.target.id)) {
+    if (favouriteProperties.includes(Number(e.target.id))) {
       return console.log("All ready in your list");
     } else {
-      favouriteProperties.push(e.target.id);
-      console.log(favouriteProperties);
+      favouriteProperties.push(Number(e.target.id));
+      console.log("Favourites Array", favouriteProperties);
+      _addToMatchedFavourites(Number(e.target.id));
     }
   });
 }
 
-AddToFavourites();
+function _addToMatchedFavourites(propertyId) {
+  const matchedResult = AllProperties.find(({ property_id }) => {
+    return property_id === propertyId;
+  });
+  matchedFavourites.push(matchedResult);
+  console.log(matchedResult);
+  console.log(propertyId);
+  console.log("New Matched Properties", matchedFavourites);
+}
+
+function _matchedFavourites() {
+  // console.log("All Properties Array", AllProperties);
+  console.log("Favourites Array", favouriteProperties);
+  favouriteProperties.forEach((savedProperty) => {
+    AllProperties.forEach((property) => {
+      if (property.property_id === savedProperty) {
+        matchedFavourites.push(property);
+      }
+    });
+  });
+}
 
 function _renderFavourites() {
-  fetch("/api/properties?location=brighton")
-    .then((response) => response.json())
-    .then((json) => {
-      const results = json.result.properties.elements;
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  //render matched properties here
+  console.log("matched properties", matchedFavourites);
 }
 
 function _renderProperty(property) {
@@ -76,7 +94,11 @@ function _renderProperty(property) {
                       property.property_id
                     } class="favourites-button button">Add to favourites</button>
                     </div>
+                    <button class="viewMap-button button">View on map</button>
+                    </div>
                   </div>
                 `;
   return html;
 }
+
+AddToFavourites();
