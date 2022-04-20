@@ -2,6 +2,7 @@ import "./styles.scss";
 const PropertyList = document.getElementById("propertyList");
 const FavouriteList = document.getElementById("favouritesList");
 const RESULTS_PER_PAGE = 10;
+let currentPage = 2;
 const favouriteProperties = [
   12739280, 12594566, 12086860, 12696851, 12769085, 12733905, 12087535,
   12421036, 12448277,
@@ -28,6 +29,7 @@ fetch("/api/properties?location=brighton")
       favouriteListInfo = favouriteListInfo.concat(_renderFavourites(element));
     });
     FavouriteList.insertAdjacentHTML("afterbegin", favouriteListInfo);
+    PropertyList.insertAdjacentHTML("beforeend", _renderPagination());
   })
   .catch((err) => {
     console.error(err);
@@ -41,10 +43,47 @@ function getSearchResultsPage(page = 1) {
   console.log(AllProperties.slice(start, end));
 }
 
+function _renderPagination() {
+  const numberOfPages = Math.ceil(AllProperties.length / RESULTS_PER_PAGE);
+  console.log("Number of Pages", numberOfPages);
+  //first page and no other pages
+  if (currentPage === 1 && numberOfPages === 1) {
+    return;
+  }
+  //first page and other pages
+  if (currentPage === 1 && numberOfPages > 1) {
+    return `
+    <section id="pagination" class="pagination">
+          <button class="button">
+            <span>Page ${currentPage + 1}</span>
+          </button>
+        </section>`;
+  }
+  //last page
+  if (currentPage === numberOfPages && numberOfPages > 1) {
+    return `
+    <section id="pagination" class="pagination">
+          <button class="button">
+            <span>Page ${currentPage - 1}</span>
+          </button>
+        </section>`;
+  }
+  //other page
+  if (currentPage < numberOfPages) {
+    return `
+    <button class="button"">
+            <span>Page ${currentPage - 1}</span>
+          </button>
+          <button class="button">
+            <span>Page ${currentPage + 1}</span>
+          </button>`;
+  }
+}
+
 function AddToFavourites() {
   PropertyList.addEventListener("click", (e) => {
     if (favouriteProperties.includes(Number(e.target.id))) {
-      return console.log("All ready in your list");
+      return alert("All ready in your list");
     } else {
       favouriteProperties.push(Number(e.target.id));
       console.log("Favourites Array", favouriteProperties);
